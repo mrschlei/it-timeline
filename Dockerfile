@@ -2,9 +2,6 @@ FROM drupal:7-apache
 
 #MAINTAINER: Ben Fairfield - benfa
 
-apt-get install drush
-drush cc all
-
 #### Cosign Pre-requisites ###
 WORKDIR /usr/lib/apache2/modules
 
@@ -15,8 +12,10 @@ ENV APACHE2=/usr/sbin/apache2
 
 # install PHP and Apache2 here
 RUN apt-get update \
-	&& apt-get install -y wget gcc make openssl \
+	&& apt-get install -y drush wget gcc make openssl \
 		libssl-dev=$OPENSSL_VERSION apache2-dev autoconf
+
+RUN drush cc all
 
 ### Build Cosign ###
 RUN wget "$COSIGN_URL" \
