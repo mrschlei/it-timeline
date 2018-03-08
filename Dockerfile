@@ -2,6 +2,9 @@ FROM drupal:7-apache
 
 #MAINTAINER: Ben Fairfield - benfa
 
+apt-get install drush
+drush cc all
+
 #### Cosign Pre-requisites ###
 WORKDIR /usr/lib/apache2/modules
 
