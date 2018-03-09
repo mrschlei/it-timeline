@@ -15,7 +15,7 @@ RUN apt-get update \
 	&& apt-get install -y wget gcc make openssl \
 		libssl-dev=$OPENSSL_VERSION apache2-dev autoconf 
 
-#RUN drush cc all
+#RUN drush cc all --yes
 
 ### Build Cosign ###
 RUN wget "$COSIGN_URL" \
