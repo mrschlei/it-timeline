@@ -19,7 +19,8 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 #RUN composer global require drush/drush:7.*
-RUN composer global require drush/drush
+#RUN composer global require drush/drush
+RUN composer require drush/drush
 RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 #RUN drush cc all
 #=======
