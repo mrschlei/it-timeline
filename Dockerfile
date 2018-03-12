@@ -21,7 +21,7 @@ RUN mv composer.phar /usr/local/bin/composer
 RUN composer global require drush/drush:7.*
 RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 #RUN drush cc all
-=======
+#=======
 #RUN drush cc all --yes
 #>>>>>>> 473e0070716089643a219bf2fe83533b061d6c5c
 
