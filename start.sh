@@ -30,6 +30,7 @@ a2ensite default-ssl
 chown -R www-data.www-data /var/www/html /var/cosign
 chmod -R 2775 /var/www/html /var/cosign
 
-/usr/local/bin/apache2-foreground
 cd /var/www/html
 drush up --no-backup --yes
+
+/usr/local/bin/apache2-foreground
