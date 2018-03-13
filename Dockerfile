@@ -15,18 +15,6 @@ RUN apt-get update \
 	&& apt-get install -y wget gcc make openssl \
 		libssl-dev=$OPENSSL_VERSION apache2-dev autoconf 
 
-#<<<<<<< HEAD
-RUN curl -sS https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/composer
-#RUN composer global require drush/drush:7.*
-#RUN composer global require drush/drush
-RUN composer require drush/drush
-RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
-#RUN drush cc all
-#=======
-#RUN drush cc all --yes
-#>>>>>>> 473e0070716089643a219bf2fe83533b061d6c5c
-
 ### Build Cosign ###
 RUN wget "$COSIGN_URL" \
 	&& mkdir -p src/cosign \
@@ -42,7 +30,6 @@ RUN wget "$COSIGN_URL" \
 	&& mkdir -p /var/cosign/filter \
 	&& chmod 777 /var/cosign/filter
 
-#WORKDIR /etc/apache2
 
 ### Remove pre-reqs ###
 RUN apt-get remove -y make wget autoconf \
@@ -51,6 +38,14 @@ RUN apt-get remove -y make wget autoconf \
 EXPOSE 443
 
 COPY . /var/www/html/
+
+# install drush
+RUN mkdir /drush
+WORKDIR /drush
+RUN curl -sS https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
+RUN composer require drush/drush
+RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 ### Start script incorporates config files and sends logs to stdout ###
 COPY start.sh /usr/local/bin
