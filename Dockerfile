@@ -44,7 +44,8 @@ RUN mkdir /drush
 WORKDIR /drush
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
-RUN composer require drush/drush:6.1
+RUN composer require drush/drush:7
+#RUN composer require drush/drush:6.1
 RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 ### Start script incorporates config files and sends logs to stdout ###
