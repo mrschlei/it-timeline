@@ -31,5 +31,5 @@ chown -R www-data.www-data /var/www/html /var/cosign
 chmod -R 2775 /var/www/html /var/cosign
 
 /usr/local/bin/apache2-foreground
-
-drush cc all
+cd /var/www/html
+drush up --no-backup --yes
