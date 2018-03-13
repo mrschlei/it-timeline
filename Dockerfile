@@ -22,8 +22,6 @@ RUN mv composer.phar /usr/local/bin/composer
 #RUN composer global require drush/drush
 RUN composer require drush/drush
 RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
-RUN echo "alias drush=\"/usr/lib/apache2/modules/vendor/drush/drush/drush\"" >> /root/.bashrc
-RUN . /root/.bashrc
 #RUN drush cc all
 #=======
 #RUN drush cc all --yes
