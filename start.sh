@@ -31,6 +31,3 @@ chown -R www-data.www-data /var/www/html /var/cosign
 chmod -R 2775 /var/www/html /var/cosign
 
 /usr/local/bin/apache2-foreground
-
-echo "alias drush=\"/usr/lib/apache2/modules/vendor/drush/drush/drush\"" >> /root/.bashrc
-. /root/.bashrc
