@@ -50,7 +50,7 @@ RUN chown -R root:root /var/www/html /var/log/apache2 /var/lock/apache2 \
 	/var/run/apache2 /run/lock
 
 ### Modify perms for the openshift user, who is not root, but part of root group.
-RUN chmod -R g+rw /var/www/html /var/cosign 
+#RUN chmod -R g+rw /var/www/html /var/cosign 
 RUN chmod -R g+rw /var/www/html /var/cosign /var/log/apache2 \
 	 /var/www/html/sites/default /etc/apache2 /etc/ssl/certs \
 	/etc/ssl/private /etc/apache2/mods-enabled /etc/apache2/sites-enabled \
