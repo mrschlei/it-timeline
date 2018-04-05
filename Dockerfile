@@ -45,7 +45,6 @@ COPY . /var/www/html/
 ### There may be an easier way to do all of this by setting APACHE_RUN_USER
 ### and APACHE_RUN_GROUP in env vars or /etc/apache2/envvars
 
-RUN mkdir /run/lock
 ### change directory owner, as openshift user is in root group.
 RUN chown -R root:root /var/www/html /var/log/apache2 /var/lock/apache2 \
 	/var/run/apache2 /run/lock
