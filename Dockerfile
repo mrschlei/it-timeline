@@ -14,7 +14,8 @@ ENV APACHE2=/usr/sbin/apache2
 RUN apt-get update \
 	&& apt-get install -y wget gcc make openssl \
 		#libssl-dev=$OPENSSL_VERSION apache2-dev autoconf
-		libssl-dev apache2-dev autoconf
+		libssl-dev apache2-dev autoconf \
+		inetutils-netstat
 
 ### Build Cosign ###
 RUN wget "$COSIGN_URL" \
@@ -46,18 +47,18 @@ COPY . /var/www/html/
 ### and APACHE_RUN_GROUP in env vars or /etc/apache2/envvars
 
 ### change directory owner, as openshift user is in root group.
-RUN chown -R root:root /var/www/html /var/log/apache2 /var/lock/apache2 \
+#RUN chown -R root:root /var/www/html /var/log/apache2 /var/lock/apache2 \
 	/var/run/apache2 /run/lock
 
 ### Modify perms for the openshift user, who is not root, but part of root group.
-#RUN chmod -R g+rw /var/www/html /var/cosign 
-RUN chmod -R g+rwx /var/www/html /var/cosign /var/log/apache2 \
+##RUN chmod -R g+rw /var/www/html /var/cosign 
+#RUN chmod -R g+rw /var/www/html /var/cosign /var/log/apache2 \
 	 /var/www/html/sites/default /etc/apache2 /etc/ssl/certs \
 	/etc/ssl/private /etc/apache2/mods-enabled /etc/apache2/sites-enabled \
 	/etc/apache2/sites-available /etc/apache2/mods-available \
 	/var/lib/apache2/module/enabled_by_admin /var/lib/apache2/site/enabled_by_admin \
 	/var/lock/apache2 /var/run/apache2
-RUN chmod g+rwx /etc/ssl/private
+#RUN chmod g+rwx /etc/ssl/private
 
 ## install drush
 #RUN mkdir /drush
@@ -70,7 +71,7 @@ RUN chmod g+rwx /etc/ssl/private
 #RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 ### Start script incorporates config files and sends logs to stdout ###
-COPY start.sh /usr/local/bin
-RUN chmod 755 /usr/local/bin/start.sh
-CMD /usr/local/bin/start.sh
+#COPY start.sh /usr/local/bin
+#RUN chmod 755 /usr/local/bin/start.sh
+#CMD /usr/local/bin/start.sh
 
