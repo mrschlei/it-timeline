@@ -1,8 +1,10 @@
 #!/bin/sh
 
 # Redirect logs to stdout and stderr for docker reasons.
-ln -sf /dev/stdout /var/log/apache2/access_log
-ln -sf /dev/stderr /var/log/apache2/error_log
+# it seems both sylinks already exist. 
+# these commands create unnecessary duplicates
+#ln -sf /dev/stdout /var/log/apache2/access_log
+#ln -sf /dev/stderr /var/log/apache2/error_log
 
 # apache and virtual host secrets
 ln -sf /secrets/apache2/apache2.conf /etc/apache2/apache2.conf
