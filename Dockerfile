@@ -34,12 +34,12 @@ RUN wget "$COSIGN_URL" \
 RUN apt-get remove -y make wget autoconf \
 	&& apt-get autoremove -y
 
-# Section that setups up Apache and Cosign to run as non-root user.
+# Section that sets up Apache and Cosign to run as non-root user.
 EXPOSE 8080
 EXPOSE 8443
 
 # nothing here for the time being.
-#COPY . /var/www/html/
+COPY . /var/www/html/
 
 ### There may be an easier way to do all of this by setting APACHE_RUN_USER
 ### and APACHE_RUN_GROUP in env vars or /etc/apache2/envvars
