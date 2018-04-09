@@ -1,8 +1,8 @@
 FROM drupal:7.58-apache
 
-#MAINTAINER: 
+MAINTAINER: 
 
-#### Cosign Pre-requisites ###
+### Cosign Pre-requisites ###
 WORKDIR /usr/lib/apache2/modules
 
 ENV COSIGN_URL https://github.com/umich-iam/cosign/archive/cosign-3.4.0.tar.gz
@@ -10,13 +10,13 @@ ENV CPPFLAGS="-I/usr/kerberos/include"
 ENV OPENSSL_VERSION 1.0.1t-1+deb8u7
 ENV APACHE2=/usr/sbin/apache2
 
-# install PHP and Apache2 here
+ install PHP and Apache2 here
 RUN apt-get update \
 	&& apt-get install -y wget gcc make openssl \
 		#libssl-dev=$OPENSSL_VERSION apache2-dev autoconf
 		libssl-dev apache2-dev autoconf 
 
-### Build Cosign ###
+## Build Cosign ###
 RUN wget "$COSIGN_URL" \
 	&& mkdir -p src/cosign \
 	&& tar -xvf cosign-3.4.0.tar.gz -C src/cosign --strip-components=1 \
@@ -31,46 +31,46 @@ RUN wget "$COSIGN_URL" \
 	&& mkdir -p /var/cosign/filter \
 	&& chmod 777 /var/cosign/filter
 
-### Remove pre-reqs ###
+## Remove pre-reqs ###
 RUN apt-get remove -y make wget autoconf \
 	&& apt-get autoremove -y
 
-# Section that setups up Apache and Cosign to run as non-root user.
+ Section that setups up Apache and Cosign to run as non-root user.
 EXPOSE 8080
 EXPOSE 8443
 
-# nothing here for the time being.
-COPY . /var/www/html/
+ nothing here for the time being.
+#COPY . /var/www/html/
 
-### There may be an easier way to do all of this by setting APACHE_RUN_USER
-### and APACHE_RUN_GROUP in env vars or /etc/apache2/envvars
+## There may be an easier way to do all of this by setting APACHE_RUN_USER
+## and APACHE_RUN_GROUP in env vars or /etc/apache2/envvars
 
-### change directory owner, as openshift user is in root group.
-#RUN chown -R root:root /var/www/html /var/log/apache2 /var/lock/apache2 \
-#	/var/run/apache2 /run/lock
+## change directory owner, as openshift user is in root group.
+RUN chown -R root:root /var/www/html /var/log/apache2 /var/lock/apache2 \
+	/var/run/apache2 /run/lock
 
-### Modify perms for the openshift user, who is not root, but part of root group.
-##RUN chmod -R g+rw /var/www/html /var/cosign 
-#RUN chmod -R g+rw /var/www/html /var/cosign /var/log/apache2 \
-#	 /var/www/html/sites/default /etc/apache2 /etc/ssl/certs \
-#	/etc/ssl/private /etc/apache2/mods-enabled /etc/apache2/sites-enabled \
-#	/etc/apache2/sites-available /etc/apache2/mods-available \
-#	/var/lib/apache2/module/enabled_by_admin /var/lib/apache2/site/enabled_by_admin \
-#	/var/lock/apache2 /var/run/apache2
-#RUN chmod g+rwx /etc/ssl/private
+## Modify perms for the openshift user, who is not root, but part of root group.
+#RUN chmod -R g+rw /var/www/html /var/cosign 
+RUN chmod -R g+rw /var/www/html /var/cosign /var/log/apache2 \
+	 /var/www/html/sites/default /etc/apache2 /etc/ssl/certs \
+	/etc/ssl/private /etc/apache2/mods-enabled /etc/apache2/sites-enabled \
+	/etc/apache2/sites-available /etc/apache2/mods-available \
+	/var/lib/apache2/module/enabled_by_admin /var/lib/apache2/site/enabled_by_admin \
+	/var/lock/apache2 /var/run/apache2
+RUN chmod g+rwx /etc/ssl/private
 
-## install drush
+# install drush
 #RUN mkdir /drush
 #WORKDIR /drush
 #RUN curl -sS https://getcomposer.org/installer | php
 #RUN mv composer.phar /usr/local/bin/composer
-##Drush 7 bad
+#Drush 7 bad
 ##RUN composer require drush/drush:7
 #RUN composer require drush/drush:6.1
 #RUN export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
-### Start script incorporates config files and sends logs to stdout ###
-#COPY start.sh /usr/local/bin
-#RUN chmod 755 /usr/local/bin/start.sh
-#CMD /usr/local/bin/start.sh
+## Start script incorporates config files and sends logs to stdout ###
+COPY start.sh /usr/local/bin
+RUN chmod 755 /usr/local/bin/start.sh
+CMD /usr/local/bin/start.sh
 
