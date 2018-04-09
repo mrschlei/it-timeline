@@ -1,6 +1,6 @@
 FROM drupal:7.58-apache
 
-MAINTAINER: benfa
+#MAINTAINER: benfa
 
 ### Cosign Pre-requisites ###
 WORKDIR /usr/lib/apache2/modules
