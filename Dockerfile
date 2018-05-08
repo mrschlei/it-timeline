@@ -1,5 +1,3 @@
-
-
 FROM drupal7-cosign:latest
 
 COPY . /var/www/html/
@@ -18,7 +16,6 @@ RUN chmod -R g+r /var/www/html
 ### 	/var/lock/apache2 /var/run/apache2 /usr/local/etc/php \
 ### 	 /usr/local/lib/php
 RUN chmod g+x /etc/ssl/private
-
 
 COPY start.sh /usr/local/bin
 RUN chmod 755 /usr/local/bin/start.sh
