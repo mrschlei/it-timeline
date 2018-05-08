@@ -17,7 +17,7 @@ RUN chmod -R g+r /var/www/html
 ### 	/var/lib/apache2/module/enabled_by_admin /var/lib/apache2/site/enabled_by_admin \
 ### 	/var/lock/apache2 /var/run/apache2 /usr/local/etc/php \
 ### 	 /usr/local/lib/php
-### RUN chmod g+x /etc/ssl/private
+RUN chmod g+x /etc/ssl/private
 
 
 COPY start.sh /usr/local/bin
