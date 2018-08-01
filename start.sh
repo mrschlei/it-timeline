@@ -23,7 +23,8 @@ c_rehash /etc/ssl/certs >/dev/null
 
 a2enmod ssl
 a2enmod include
-a2ensite default-ssl 
+#uncomment line below later
+#a2ensite default-ssl 
 
 #cd /var/www/html
 #drush @sites cc all --yes
